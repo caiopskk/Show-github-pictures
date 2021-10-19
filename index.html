@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Fotos Github</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav class="container">
+        <h1>Fotos de perfil do Github</h1>
+      </nav>
+    </header>
+    <div>
+      <img src="" id="profile" />
+      <p id="name"></p>
+    </div>
+
+    <div>
+      <button onclick="viewUser('caiopskk')">caiopskk</button>
+      <button onclick="viewUser('barrosfilipe')">barrosfilipe</button>
+      <button onclick="viewUser('ramirothedriver')">ramirothedriver</button>
+    </div>
+    <script>
+      var url = new URL(window.location.href);
+      var userParam = url.searchParams.get("user");
+
+      function viewUser(username) {
+        fetch(`https://api.github.com/users/${username ? username : userParam}`)
+          .then((response) => response.json())
+          .then((json) => {
+            document.getElementById("profile").src = json.avatar_url;
+            document.getElementById("name").textContent = json.name;
+          });
+      }
+
+      viewUser();
+    </script>
+  </body>
+  <div>
+    <header class="comment">💌</header>
+    <script>
+      function onButtonClick() {
+        document.getElementById("input").className = "show";
+      }
+      const input = document.CreateElement("input");
+      input.setAttribute("type", "text");
+      document.body.appendChild(input);
+    </script>
+    <input
+      class="show"
+      type="button"
+      name="text"
+      value="Comment💭"
+      onclick="onButtonClick()"
+    />
+    <input class="hide" type="text" id="input" value="..." />
+  </div>
+</html>
