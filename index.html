@@ -17,7 +17,7 @@
   <body>
     <header>
       <nav class="container">
-        <h1>Fotos de perfil do Github</h1>
+        <h1>GITHUB Profile Picture</h1>
       </nav>
     </header>
     <div>
@@ -25,17 +25,15 @@
       <p id="name"></p>
     </div>
 
-    <div>
-      <button onclick="viewUser('caiopskk')">caiopskk</button>
-      <button onclick="viewUser('barrosfilipe')">barrosfilipe</button>
-      <button onclick="viewUser('ramirothedriver')">ramirothedriver</button>
-    </div>
+    <div></div>
     <script>
       var url = new URL(window.location.href);
       var userParam = url.searchParams.get("user");
 
       function viewUser(username) {
-        fetch(`https://api.github.com/users/${username ? username : userParam}`)
+        console.log(username.value);
+        var git = username.value;
+        fetch(`https://api.github.com/users/${git}`)
           .then((response) => response.json())
           .then((json) => {
             document.getElementById("profile").src = json.avatar_url;
@@ -47,10 +45,17 @@
     </script>
   </body>
   <div>
-    <header class="comment">💌</header>
     <script>
+      var boxvisible = "hide";
       function onButtonClick() {
-        document.getElementById("input").className = "show";
+        console.log(document.getElementById("input").className);
+        if (boxvisible == "show") {
+          document.getElementById("input").className = "hide";
+          boxvisible = "hide";
+        } else {
+          document.getElementById("input").className = "show";
+          boxvisible = "show";
+        }
       }
       const input = document.CreateElement("input");
       input.setAttribute("type", "text");
@@ -60,9 +65,15 @@
       class="show"
       type="button"
       name="text"
-      value="Comment💭"
+      value="Username"
       onclick="onButtonClick()"
     />
-    <input class="hide" type="text" id="input" value="..." />
+    <input
+      onchange="viewUser(this)"
+      class="hide"
+      type="text"
+      id="input"
+      value=""
+    />
   </div>
 </html>
