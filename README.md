@@ -2,4 +2,4 @@
 
 Basic code to show github pictures on screen
 <div align="center">
-  <img src=https://i.imgur.com/UDrQ5JA.png?1 </img>
+  <img src=https://imgur.com/a/5VRDxTo </img>
