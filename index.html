@@ -12,15 +12,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
   </head>
   <body>
-    <header>
-      <nav class="container">
-        <h1>GITHUB Profile Picture</h1>
+    <header id="header">
+      <nav id="nav-container">
+        <h1 id="title">GITHUB Profile Picture</h1>
       </nav>
     </header>
-    <div>
+    <div id="profile-container">
       <img src="" id="profile" />
       <p id="name"></p>
     </div>
@@ -34,10 +33,26 @@
         console.log(username.value);
         var git = username.value;
         fetch(`https://api.github.com/users/${git}`)
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('User not found');
+            }
+            return response.json();
+          })
           .then((json) => {
-            document.getElementById("profile").src = json.avatar_url;
-            document.getElementById("name").textContent = json.name;
+            if (json.avatar_url) {
+              document.getElementById("profile").src = json.avatar_url;
+              document.getElementById("profile").style.display = "block";
+              document.getElementById("name").textContent = json.name || git;
+            } else {
+              document.getElementById("profile").style.display = "none";
+              document.getElementById("name").textContent = "Nenhuma foto encontrada";
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            document.getElementById("profile").style.display = "none";
+            document.getElementById("name").textContent = "Nenhuma foto encontrada";
           });
       }
 
@@ -62,10 +77,11 @@
       document.body.appendChild(input);
     </script>
     <input
+      id="username-button"
       class="show"
       type="button"
       name="text"
-      value="Username"
+      value="Insert username"
       onclick="onButtonClick()"
     />
     <input
